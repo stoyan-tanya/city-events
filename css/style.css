@@ -1,0 +1,69 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    background: #E4E3FF;
+    color: #0D0952;
+}
+
+header {
+    background: #0D0952;
+    padding: 2.5rem 1rem;
+
+}
+
+header h1 {
+    font-family: "Century Gothic", AppleGothic, sans-serif;
+    font-size: 5rem;
+    text-align: center;
+    color: #fff;
+}
+
+header nav {
+    margin-right: 2.5rem;
+}
+
+main {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+section {
+    margin: 2rem 0;
+}
+
+.card {
+    padding: 16px;
+    margin-bottom: 10px;
+}
+
+.card.music {
+    border-left: 4px solid #76fab4;
+}
+
+.card.art {
+    border-left: 4px solid #1f874f;
+}
+
+.card.theatre {
+    border-left: 4px solid #053920;
+}
+
+aside {
+    background: #AAA7EB;
+    border: 1px solid #0D0952;
+    padding: 1rem 0.5rem;
+}
+
+footer {
+    background: #0D0952;
+    font-size: 1rem;
+    color: #625EB8;
+}
+
