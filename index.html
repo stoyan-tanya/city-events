@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header>
+<header class="site-header">
     <h1>Афіша подій міста</h1>
     <nav>
         <a href="#events">Події</a>
@@ -15,52 +15,54 @@
     </nav>
 </header>
 
-<main>
-    <section id="filters">
-        <h2>Фільтр за датою/категорією</h2>
-        <form>
-            <div>
-                <label for="event-date">Оберіть дату події:</label>
-                <input type="date" id="event-date">
-            </div>
+<div class="layout">
+    <main>
+        <section id="filters">
+            <h2>Фільтр за датою/категорією</h2>
+            <form>
+                <div>
+                    <label for="event-date">Оберіть дату події:</label>
+                    <input type="date" id="event-date">
+                </div>
 
-            <div>
-                <label for="event-category">Оберіть категорію події:</label>
-                <select id="event-category">
-                    <option value="music">Музика</option>
-                    <option value="art">Мистецтво</option>
-                    <option value="theatre">Театр</option>
-                </select>
-            </div>
-        </form>
-    </section>
+                <div>
+                    <label for="event-category">Оберіть категорію події:</label>
+                    <select id="event-category">
+                        <option value="music">Музика</option>
+                        <option value="art">Мистецтво</option>
+                        <option value="theatre">Театр</option>
+                    </select>
+                </div>
+            </form>
+        </section>
 
-    <section id="events">
-        <h2>Події</h2>
-        <article class="card music">
-            <h3>"Deadbeat Tour" Tame Impala</h3>
-            <p>ЛИСТОПАД 24, 2026, 17:00, НСК «Олімпійський»</p>
-            <img alt='Афіша "Deadbeat Tour"' src='assets/img/ConcertAffiche.jpg'>
-        </article>
+        <section id="events" class="all-cards">
+            <h2>Події</h2>
+            <article class="card music">
+                <h3>"Deadbeat Tour" Tame Impala</h3>
+                <p>ЛИСТОПАД 24, 2026, 17:00, НСК «Олімпійський»</p>
+                <img alt='Афіша "Deadbeat Tour"' src='assets/img/ConcertAffiche.jpg'>
+            </article>
 
-        <article class="card art">
-            <h3>Марія Примаченко "Слава  Україні"</h3>
-            <p>ЖОВТЕНЬ 2 - 27, 2026, бульвар Тараса Шевченка</p>
-            <img alt='Афіша виставки Марії Приймаченко Слава Україні"' src="assets/img/ExhibitionMariya.jpg">
-        </article>
+            <article class="card art">
+                <h3>Марія Примаченко "Слава  Україні"</h3>
+                <p>ЖОВТЕНЬ 2 - 27, 2026, бульвар Тараса Шевченка</p>
+                <img alt='Афіша виставки Марії Приймаченко Слава Україні"' src="assets/img/ExhibitionMariya.jpg">
+            </article>
 
-        <article class="card theatre">
-            <h3>Новорічна музична вистава «Три горішки для Попелюшки»</h3>
-            <p>ГРУДЕНЬ 20, 2026, 11:00, Будинок Офіцерів</p>
-            <img alt='Афіша новорічної вистави' src="assets/img/NewYearPlay.jpg">
-        </article>
-    </section>
-</main>
+            <article class="card theatre">
+                <h3>Новорічна музична вистава «Три горішки для Попелюшки»</h3>
+                <p>ГРУДЕНЬ 20, 2026, 11:00, Будинок Офіцерів</p>
+                <img alt='Афіша новорічної вистави' src="assets/img/NewYearPlay.jpg">
+            </article>
+        </section>
+    </main>
 
-<aside id="current">
-    <h2>Деталі події</h2>
-    <p>Тут можна буде переглянути деталі обраної події</p>
-</aside>
+    <aside id="current">
+        <h2>Деталі події</h2>
+        <p>Тут можна буде переглянути деталі обраної події</p>
+    </aside>
+</div>
 
 <footer>
     <p>Організатори: Стоян Тетяна ІП-51</p>
