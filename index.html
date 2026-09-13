@@ -19,13 +19,13 @@
     <main>
         <section id="filters">
             <h2>Фільтр за датою/категорією</h2>
-            <form>
-                <div>
+            <form class="filters">
+                <div class="filter-date">
                     <label for="event-date">Оберіть дату події:</label>
                     <input type="date" id="event-date">
                 </div>
 
-                <div>
+                <div class="filter-category">
                     <label for="event-category">Оберіть категорію події:</label>
                     <select id="event-category">
                         <option value="music">Музика</option>
@@ -40,18 +40,21 @@
             <h2>Події</h2>
             <div class="all-cards">
                 <article class="card music">
+                    <span class="badge">Музика</span>
                     <h3>"Deadbeat Tour" Tame Impala</h3>
                     <p>ЛИСТОПАД 24, 2026, 17:00, НСК «Олімпійський»</p>
                     <img alt='Афіша "Deadbeat Tour"' src='assets/img/ConcertAffiche.jpg'>
                 </article>
 
                 <article class="card art">
+                    <span class="badge">Мистецтво</span>
                     <h3>Марія Примаченко "Слава  Україні"</h3>
                     <p>ЖОВТЕНЬ 2 - 27, 2026, бульвар Тараса Шевченка</p>
                     <img alt='Афіша виставки Марії Приймаченко Слава Україні"' src="assets/img/ExhibitionMariya.jpg">
                 </article>
 
                 <article class="card theatre">
+                    <span class="badge">Театр</span>
                     <h3>Новорічна музична вистава «Три горішки для Попелюшки»</h3>
                     <p>ГРУДЕНЬ 20, 2026, 11:00, Будинок Офіцерів</p>
                     <img alt='Афіша новорічної вистави' src="assets/img/NewYearPlay.jpg">
