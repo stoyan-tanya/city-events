@@ -61,6 +61,10 @@ h2 {
     font-weight: bold;
 }
 
+p {
+    margin: 0.5rem 0;
+}
+
 main {
     max-width: 1500px;
     margin: 0 auto;
@@ -75,11 +79,6 @@ main {
     margin: 0;
 }
 
-.filter-date {
-    border-right: 2px solid #BEBAFD;
-    padding-right: 19px;
-}
-
 select, input {
     border: 2px solid #BEBAFD;
     border-radius: 5px;
@@ -87,10 +86,14 @@ select, input {
 
 .filters {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 19px;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin: 0 0 0 1rem;
+    border-left: 4px solid #BEBAFD;
+    border-radius: 5px;
+    padding: 1rem 0 1rem 1rem;
 }
 
 .card {
@@ -129,17 +132,31 @@ select, input {
 .card.theatre .badge { background: #FD7080; }
 .card.theatre { border-left: 7px solid #FD7080; }
 
+.filters {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin: 0 0 0 1rem;
+    border-left: 4px solid #BEBAFD;
+    border-radius: 5px;
+    padding: 0.5rem 0 0.5rem 1rem;
+}
+
+
 aside {
     background: #BEBAFD;
-    border: 2px solid #9856D1;
+    border: 4px solid #8043b5;
     padding: 0.5rem 1rem;
     border-radius: 10px;
     margin: 0;
 }
 
 aside h2 {
-    color: #7d3fb1;
+    color: #8043b5;
     font-style: italic;
+
 }
 
 footer {
@@ -169,12 +186,32 @@ footer {
     .site-header {
         flex-direction: row;
     }
+
+    h2 {
+        margin: 0;
+    }
+
+    .filters {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 19px;
+        margin: 0;
+        border-left: none;
+    }
+
+    .filter-date {
+        border-right: 2px solid #BEBAFD;
+        padding-right: 19px;
+    }
 }
 
 @media (min-width: 1024px) {
     .all-cards {
         grid-template-columns: repeat(3, 1fr);
     }
+
     .layout {
         display: grid;
         grid-template-columns: 2fr 1fr;
