@@ -131,14 +131,15 @@ select, input {
 
 aside {
     background: #BEBAFD;
-    border: 4px solid #9856D1;
+    border: 2px solid #9856D1;
     padding: 0.5rem 1rem;
     border-radius: 10px;
     margin: 0;
 }
 
 aside h2 {
-    color: #EC306E;
+    color: #7d3fb1;
+    font-style: italic;
 }
 
 footer {
