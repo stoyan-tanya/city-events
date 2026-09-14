@@ -26,11 +26,11 @@ body {
     gap: 15px;
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-size: 16px;
-    color: #FDEFE5;
-    background: linear-gradient(to right, #9856D1, #EC306E);
+    color: #fdfdfd;
+    background: linear-gradient(to right, #914BCE, #E5155A);
     border-radius: 10px;
     padding: 2rem 1.5rem;
-    box-shadow: #9856D1 0 5px 15px;
+    box-shadow: #914BCE 0 5px 15px;
 }
 
 .site-header h1 {
@@ -46,7 +46,7 @@ body {
 
 .site-header nav a {
     text-decoration: none;
-    color: #FDEFE5;
+    color: #fdfdfd;
     transition: color 0.3s ease-in-out;
 }
 
@@ -57,7 +57,7 @@ body {
 h2 {
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-size: 20px;
-    color: #9856D1;
+    color: #914BCE;
     font-weight: bold;
 }
 
@@ -126,11 +126,11 @@ select, input {
 .card.music .badge { background: #BA0086; }
 .card.music { border-left: 7px solid #BA0086; }
 
-.card.art .badge { background: #EC306E; }
-.card.art { border-left: 7px solid #EC306E; }
+.card.art .badge { background: #E01559; }
+.card.art { border-left: 7px solid #E01559; }
 
-.card.theatre .badge { background: #FD7080; }
-.card.theatre { border-left: 7px solid #FD7080; }
+.card.theatre .badge { background: #BF4E5B; }
+.card.theatre { border-left: 7px solid #BF4E5B; }
 
 .filters {
     display: flex;
@@ -147,14 +147,14 @@ select, input {
 
 aside {
     background: #BEBAFD;
-    border: 4px solid #8043b5;
+    border: 4px solid #914BCE;
     padding: 0.5rem 1rem;
     border-radius: 10px;
     margin: 0;
 }
 
 aside h2 {
-    color: #8043b5;
+    color: #64348D;
     font-style: italic;
 
 }
@@ -163,11 +163,11 @@ footer {
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-size: 16px;
     text-align: center;
-    color: #FDEFE5;
-    background: linear-gradient(to right, #9856D1, #EC306E);
+    color: #fdfdfd;
+    background: linear-gradient(to right, #914BCE, #E5155A);
     border-radius: 10px;
     padding: 0 1.5rem;
-    box-shadow: #9856D1 0 5px 15px;
+    box-shadow: #914BCE 0 5px 15px;
 }
 
 .all-cards {
