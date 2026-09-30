@@ -53,3 +53,58 @@ renderCard(events);
 
 const countEvents = document.querySelector("#events-count");
 countEvents.textContent = `Кількість подій - ${events.length}`;
+
+const titleInput = document.querySelector('#event-name');
+const categoryInput = document.querySelector('#new-event-category');
+const dateInput = document.querySelector('#new-event-date');
+
+titleInput.addEventListener('input', event => {
+
+    if (titleInput.value.length > 0 && titleInput.value.length < 3) {
+        titleInput.setCustomValidity("Назва повинна складатися із щонайменше 3 символів");
+    } else {
+        titleInput.setCustomValidity('');
+    }
+})
+
+titleInput.addEventListener('invalid', event => {
+    if (titleInput.value.length < 3) {
+        titleInput.setCustomValidity('Назва повинна складатися із щонайменше 3 символів');
+    }
+})
+
+const form = document.querySelector('#forms')
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const title = titleInput.value.trim();
+    const category = categoryInput.value;
+    const date = dateInput.value;
+
+    const newEvent = {
+        title: title,
+        category: category,
+    }
+
+    events.push(newEvent);
+    renderCard(events);
+    form.reset();
+})
+
+const categoryFilter = document.querySelector('#quick-filters');
+categoryFilter.addEventListener('click', event => {
+    event.preventDefault();
+    let filtered;
+
+    if (event.target.tagName === 'BUTTON') {
+        const category = event.target.dataset.category;
+        if (category === "all") {
+            filtered = events;
+        } else {
+            filtered = events.filter(filter => filter.category === category);
+        }
+    }
+
+    renderCard(filtered);
+})
+
+
