@@ -40,30 +40,34 @@
         <section id="forms">
             <h2>Додати нову подію</h2>
             <form class="add-event-form">
-                <label for="event-name">Уведіть назву події</label>
-                <input type="text" id="event-name" name="title" required pattern=".{3,}">
+                <div class="add-event">
+                    <label for="event-name">Уведіть назву події</label>
+                    <input type="text" id="event-name" name="title" required pattern=".{3,}">
 
-                <label for="new-event-category">Оберіть категорію події:</label>
-                <select id="new-event-category" name="category" required>
-                    <option value="Музика">Музика</option>
-                    <option value="Мистецтво">Мистецтво</option>
-                    <option value="Театр">Театр</option>
-                </select>
+                    <label for="new-event-category">Оберіть категорію події:</label>
+                    <select id="new-event-category" name="category" required>
+                        <option value="Музика">Музика</option>
+                        <option value="Мистецтво">Мистецтво</option>
+                        <option value="Театр">Театр</option>
+                    </select>
 
-                <label for="new-event-date">Оберіть дату події</label>
-                <input type="date" id="new-event-date" name="date" required>
+                    <label for="new-event-date">Оберіть дату події</label>
+                    <input type="date" id="new-event-date" name="date" required>
+                </div>
 
-                <button type="submit">Додати подію</button>
+                <div class="form-submit">
+                    <button type="submit" class="btn">Додати подію</button>
+                </div>
             </form>
         </section>
 
         <section id="quick-filters">
             <h2>Швидкі фільтри</h2>
             <div class="buttons-container" id="category-filters">
-                <button type="button" data-category="all">Усі</button>
-                <button type="button" data-category="Музика">Музика</button>
-                <button type="button" data-category="Мистецтво">Мистецтво</button>
-                <button type="button" data-category="Театр">Театр</button>
+                <button type="button" class="btn" data-category="all">Усі</button>
+                <button type="button" class="btn" data-category="Музика">Музика</button>
+                <button type="button" class="btn" data-category="Мистецтво">Мистецтво</button>
+                <button type="button" class="btn" data-category="Театр">Театр</button>
             </div>
         </section>
 

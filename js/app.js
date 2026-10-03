@@ -1,5 +1,5 @@
 const events = [
-    {title: '"Deadbeat Tour" Tame Impala', category: 'Музика'},
+    {title: '"Deadbeat Tour" Tame Impala New show edition', category: 'Музика'},
     {title: 'Марія Примаченко "Слава Україні"', category: 'Мистецтво'},
     {title: 'Новорічна музична вистава "Три горішки для Попелюшки"', category: 'Театр'}]
 
@@ -58,6 +58,8 @@ const titleInput = document.querySelector('#event-name');
 const categoryInput = document.querySelector('#new-event-category');
 const dateInput = document.querySelector('#new-event-date');
 
+
+// Обробник події введення (input) для валідації довжини назви події в реальному часі
 titleInput.addEventListener('input', event => {
 
     if (titleInput.value.length > 0 && titleInput.value.length < 3) {
@@ -67,13 +69,16 @@ titleInput.addEventListener('input', event => {
     }
 })
 
+// Обробник події помилки валідації (invalid) для відображення кастомного повідомлення при спробі відправки форми
 titleInput.addEventListener('invalid', event => {
     if (titleInput.value.length < 3) {
         titleInput.setCustomValidity('Назва повинна складатися із щонайменше 3 символів');
     }
 })
 
+
 const form = document.querySelector('#forms')
+// Обробник події відправки форми (submit) для створення нової події, додавання її в масив та перемальовування карток
 form.addEventListener('submit', (event) => {
     event.preventDefault();
     const title = titleInput.value.trim();
@@ -91,6 +96,7 @@ form.addEventListener('submit', (event) => {
 })
 
 const categoryFilter = document.querySelector('#quick-filters');
+// Обробник події кліку (click) для кнопок швидких фільтрів: фільтрує масив подій за обраною категорією та оновлює відображення
 categoryFilter.addEventListener('click', event => {
     event.preventDefault();
     let filtered;
@@ -102,9 +108,8 @@ categoryFilter.addEventListener('click', event => {
         } else {
             filtered = events.filter(filter => filter.category === category);
         }
+        renderCard(filtered);
     }
-
-    renderCard(filtered);
 })
 
 

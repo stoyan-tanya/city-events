@@ -83,7 +83,7 @@ select, input {
     border-radius: 5px;
 }
 
-.filters {
+.filters, .add-event {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -93,6 +93,42 @@ select, input {
     border-left: 4px solid #BEBAFD;
     border-radius: 5px;
     padding: 1rem 0 1rem 1rem;
+}
+
+.add-event {
+    padding: 0.5rem 0 1rem 1rem;
+    margin-top: 1rem;
+}
+
+.form-submit {
+    padding: 1rem 0 1rem 2rem;
+}
+
+.btn {
+    background-color: #fff;
+    border: 1px solid rgb(100 52 141 / 0.21);
+    color: #64348D;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(145, 75, 206, 0.3);
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    padding: 0.5rem 0.7rem;
+    border-radius: 0.8rem;
+}
+
+.btn:hover {
+    background-color: #BEBAFD;
+}
+
+.btn:active {
+    transform: translateY(2px);
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .card {
@@ -207,6 +243,10 @@ footer {
     .filter-date {
         border-right: 2px solid #BEBAFD;
         padding-right: 19px;
+    }
+
+    .buttons-container {
+        padding: 1rem 0 1rem 1rem;
     }
 }
 
