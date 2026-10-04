@@ -137,6 +137,8 @@ async function loadData (){
         const data = await response.json();
         console.log(data);
 
+        events = events.filter(event => event.category !== "Свята")
+
         const newData = data.map((item) => ({
             title: item.localName,
             category: 'Свята',
