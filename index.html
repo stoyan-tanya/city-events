@@ -32,6 +32,7 @@
                         <option value="music">Музика</option>
                         <option value="art">Мистецтво</option>
                         <option value="theatre">Театр</option>
+                        <option value="holiday">Свята</option>
                     </select>
                 </div>
             </form>
@@ -49,6 +50,7 @@
                         <option value="Музика">Музика</option>
                         <option value="Мистецтво">Мистецтво</option>
                         <option value="Театр">Театр</option>
+                        <option value="holiday">Свята</option>
                     </select>
 
                     <label for="new-event-date">Оберіть дату події</label>
@@ -68,12 +70,16 @@
                 <button type="button" class="btn" data-category="Музика">Музика</button>
                 <button type="button" class="btn" data-category="Мистецтво">Мистецтво</button>
                 <button type="button" class="btn" data-category="Театр">Театр</button>
+                <button type="button" class="btn" data-category="Свята">Свята</button>
             </div>
         </section>
 
         <section id="events">
             <h2>Події</h2>
+            <p id="error" style="display: none; color: #d32f2f; font-weight: bold;"></p>
+            <p id="loading">Завантаження подій...</p>
             <p id="events-count">Кількість подій - 0</p>
+            <button type="button" id="reload" class="btn-reload">Оновити</button>
             <div class="all-cards" id="events-list">
                 <article class="card music">
                     <span class="badge">Музика</span>

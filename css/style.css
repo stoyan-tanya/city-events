@@ -104,7 +104,7 @@ select, input {
     padding: 1rem 0 1rem 2rem;
 }
 
-.btn {
+.btn, .btn-reload {
     background-color: #fff;
     border: 1px solid rgb(100 52 141 / 0.21);
     color: #64348D;
@@ -123,6 +123,10 @@ select, input {
     transform: translateY(2px);
 }
 
+.btn-reload {
+    margin: 1rem;
+}
+
 .buttons-container {
     display: flex;
     flex-direction: row;
@@ -130,6 +134,7 @@ select, input {
     align-items: center;
     gap: 0.5rem;
 }
+
 
 .card {
     padding: 16px;
@@ -166,6 +171,9 @@ select, input {
 
 .card.theatre .badge { background: #6d28d9;}
 .card.theatre { border-left: 7px solid #6d28d9; }
+
+.card.holiday .badge { background: #ff8b00;}
+.card.holiday { border-left: 7px solid #ff8b00; }
 
 .filters {
     display: flex;

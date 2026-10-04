@@ -1,9 +1,11 @@
-const events = [
+let events = [
     {title: '"Deadbeat Tour" Tame Impala New show edition', category: 'Музика'},
     {title: 'Марія Примаченко "Слава Україні"', category: 'Мистецтво'},
     {title: 'Новорічна музична вистава "Три горішки для Попелюшки"', category: 'Театр'}]
 
 const listContainer = document.querySelector('#events-list');
+
+const URL = "https://date.nager.at/api/v3/PublicHolidays/2026/UA";
 
 
 //Виводить в консолі всі події категорії "Музика"
@@ -41,8 +43,10 @@ function renderCard(events) {
             eachCard.classList.add('music');
         } else if (event.category === "Театр") {
             eachCard.classList.add('theatre');
-        } else {
+        } else if (event.category === "Мистецтво") {
             eachCard.classList.add('art');
+        } else {
+            eachCard.classList.add('holiday');
         }
 
         listContainer.append(eachCard);
@@ -57,6 +61,7 @@ countEvents.textContent = `Кількість подій - ${events.length}`;
 const titleInput = document.querySelector('#event-name');
 const categoryInput = document.querySelector('#new-event-category');
 const dateInput = document.querySelector('#new-event-date');
+const loading = document.querySelector('#loading');
 
 
 // Обробник події введення (input) для валідації довжини назви події в реальному часі
@@ -113,3 +118,56 @@ categoryFilter.addEventListener('click', event => {
 })
 
 
+// Функція запиту до URL: https://date.nager.at/api/v3/PublicHolidays/2026/UA
+async function loadData (){
+    loading.style.display = 'block';
+    const errorEl = document.querySelector('#error');
+    if (errorEl) errorEl.style.display = 'none';
+
+    try {
+        const response = await fetch(URL);
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error('Дані про події не знайдено')
+            }
+            throw new Error(`Код ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        const newData = data.map((item) => ({
+            title: item.localName,
+            category: 'Свята',
+        }));
+
+        newData.forEach((item) => {
+            events.push(item);
+        })
+
+        renderCard(events);
+    } catch (error) {
+        if (error.message === 'Дані про події не знайдено') {
+            showError(error.message);
+        } else {
+            showError('Не вдалося завантажити дані. Спробуйте пізніше.');
+        }
+        console.error(error);
+    } finally {
+        loading.style.display = 'none';
+    }
+}
+
+const reloadBtn = document.querySelector('#reload');
+if (reloadBtn) reloadBtn.addEventListener('click', loadData);
+
+function showError (error) {
+    const errorEl = document.querySelector('#error');
+    if (errorEl) {
+        errorEl.textContent = error;
+        errorEl.style.display = 'block';
+    }
+}
+
+loadData();
