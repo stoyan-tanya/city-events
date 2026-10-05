@@ -1,4 +1,97 @@
-let events = [
+//Обираю React, оскільки його підхід з використанням JSX та звичайних JS-функцій для
+// рендеру є більш гнучким і ближчим до класичного програмування.
+
+function EventCard({title, category, date}) {
+    const todayDate = new Date();
+    const eventDate = new Date(date);
+
+    const difference = eventDate - todayDate;
+    const daysLeft = Math.ceil(difference / (1000*60*60*24));
+
+    let cssClasses = "";
+    if (category === "Музика") {
+        cssClasses = "music";
+    }else if (category === "Мистецтво") {
+        cssClasses = "art";
+    } else if (category === "Театр") {
+        cssClasses = "theatre";
+    } else {
+        cssClasses = "holiday";
+    }
+
+    return (
+        <article className={`card ${cssClasses}`}>
+            <span className="badge">{category}</span>
+            <h3>{title}</h3>
+            <p>{date}</p>
+            <p>Днів до: {daysLeft}</p>
+        </article>
+    )
+}
+
+function App() {
+    const [events, setEvents] = React.useState([
+        {title: '"Deadbeat Tour" Tame Impala New show edition', category: 'Музика', date: '2026-11-24'},
+        {title: 'Марія Примаченко "Слава Україні"', category: 'Мистецтво', date: '2026-12-3'},
+        {title: 'Новорічна музична вистава "Три горішки для Попелюшки"', category: 'Театр', date: '2027-01-03'},
+    ]);
+
+    React.useEffect(() => {
+        const loadEvents = async () => {
+            try {
+                const response = await fetch("https://date.nager.at/api/v3/PublicHolidays/2026/UA");
+
+                if (!response.ok) {
+                    throw new Error("Failed to load events");
+                }
+
+                const data = await response.json();
+                const newEvents = data.map((item) => ({
+                    title: item.localName,
+                    category: 'Свята',
+                    date: item.date,
+                }))
+
+                setEvents(prevEvents => {
+                    const oldEvents = prevEvents.filter((item) => item.category !== 'Свята');
+                    return [...oldEvents, ...newEvents];
+                });
+
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        loadEvents();
+    }, []);
+
+    return (
+        <div>
+            <p>Кількість подій: {events.length}</p>
+
+            <div className="all-cards">
+                {events.map((item, index) => (
+                    <EventCard
+                        key={index}
+                        title={item.title}
+                        category={item.category}
+                        date={item.date}
+                    />
+                ))}
+            </div>
+        </div>
+    )
+}
+
+ReactDOM.createRoot(document.getElementById('events-list')).render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>
+);
+
+
+//Робота попередніх 9 лабораторних, які були замінені кодом вище
+/*let events = [
     {title: '"Deadbeat Tour" Tame Impala New show edition', category: 'Музика'},
     {title: 'Марія Примаченко "Слава Україні"', category: 'Мистецтво'},
     {title: 'Новорічна музична вистава "Три горішки для Попелюшки"', category: 'Театр'}]
@@ -172,4 +265,4 @@ function showError (error) {
     }
 }
 
-loadData();
+loadData();*/

@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Афіша подій міста</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="/js/app.js" defer></script>
+    <script src="/js/app.js" type="text/babel" defer></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 </head>
 <body>
 <header class="site-header">
@@ -75,12 +78,13 @@
         </section>
 
         <section id="events">
-            <h2>Події</h2>
+            <!-- <h2>Події</h2>
             <p id="error" style="display: none; color: #d32f2f; font-weight: bold;"></p>
             <p id="loading">Завантаження подій...</p>
             <p id="events-count">Кількість подій - 0</p>
-            <button type="button" id="reload" class="btn-reload">Оновити</button>
-            <div class="all-cards" id="events-list">
+            <button type="button" id="reload" class="btn-reload">Оновити</button> -->
+            <div id="events-list"></div>
+            <!--<div class="all-cards" id="events-list">
                 <article class="card music">
                     <span class="badge">Музика</span>
                     <h3>"Deadbeat Tour" Tame Impala</h3>
@@ -101,7 +105,7 @@
                     <p>ГРУДЕНЬ 20, 2026, 11:00, Будинок Офіцерів</p>
                     <img alt='Афіша новорічної вистави' src="assets/img/NewYearPlay.jpg">
                 </article>
-            </div>
+            </div> -->
         </section>
     </main>
 

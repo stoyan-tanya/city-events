@@ -151,8 +151,7 @@ select, input {
 
 .card p {
     text-align: center;
-    text-transform: uppercase;
-    text-decoration: underline;
+    font-weight: bold;
     margin-top: 0;
 }
 .badge {
