@@ -47,12 +47,15 @@ function renderCard(events) {
 
         listContainer.append(eachCard);
     })
+
+
+    const countEvents = document.querySelector("#events-count");
+    countEvents.textContent = `Кількість подій - ${events.length}`;
 }
 
 renderCard(events);
 
-const countEvents = document.querySelector("#events-count");
-countEvents.textContent = `Кількість подій - ${events.length}`;
+
 
 const titleInput = document.querySelector('#event-name');
 const categoryInput = document.querySelector('#new-event-category');
@@ -91,7 +94,6 @@ form.addEventListener('submit', (event) => {
     }
 
     events.push(newEvent);
-    countEvents.textContent = `Кількість подій - ${events.length}`;
     renderCard(events);
     form.reset();
 })
