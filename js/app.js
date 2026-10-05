@@ -31,9 +31,9 @@ function EventCard({title, category, date}) {
 
 function App() {
     const [events, setEvents] = React.useState([
-        {id:1, title: '"Deadbeat Tour" Tame Impala New show edition', category: 'Музика', date: '2026-11-24'},
-        {id:2, title: 'Марія Примаченко "Слава Україні"', category: 'Мистецтво', date: '2026-12-3'},
-        {id:3, title: 'Новорічна музична вистава "Три горішки для Попелюшки"', category: 'Театр', date: '2027-01-03'},
+        {title: '"Deadbeat Tour" Tame Impala New show edition', category: 'Музика', date: '2026-11-24'},
+        {title: 'Марія Примаченко "Слава Україні"', category: 'Мистецтво', date: '2026-12-3'},
+        {title: 'Новорічна музична вистава "Три горішки для Попелюшки"', category: 'Театр', date: '2027-01-03'},
     ]);
 
     React.useEffect(() => {
@@ -46,8 +46,7 @@ function App() {
                 }
 
                 const data = await response.json();
-                const newEvents = data.map((item, index) => ({
-                    id: 4 + index,
+                const newEvents = data.map((item) => ({
                     title: item.localName,
                     category: 'Свята',
                     date: item.date,
@@ -71,9 +70,9 @@ function App() {
             <p>Кількість подій: {events.length}</p>
 
             <div className="all-cards">
-                {events.map((item) => (
+                {events.map((item, index) => (
                     <EventCard
-                        key={item.id}
+                        key={index}
                         title={item.title}
                         category={item.category}
                         date={item.date}
