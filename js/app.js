@@ -1,14 +1,15 @@
-//Обираю React, оскільки його підхід з використанням JSX та звичайних JS-функцій для
+// Обираю React, оскільки його підхід з використанням JSX та звичайних JS-функцій для
 // рендеру є більш гнучким і ближчим до класичного програмування.
 
-function EventCard({title, category, date}) {
+// Рендерить картку події та обчислює кількість днів до її початку
+function EventCard({title, category, date, location, item, onToggleSaved, isSaved}) {
     const todayDate = new Date();
     const eventDate = new Date(date);
 
     const difference = eventDate - todayDate;
     const daysLeft = Math.ceil(difference / (1000*60*60*24));
 
-    let cssClasses = "";
+    let cssClasses;
     if (category === "Музика") {
         cssClasses = "music";
     }else if (category === "Мистецтво") {
@@ -19,22 +20,142 @@ function EventCard({title, category, date}) {
         cssClasses = "holiday";
     }
 
+    const buttonText = isSaved ? 'Збережено' : 'Додати в обране';
     return (
         <article className={`card ${cssClasses}`}>
             <span className="badge">{category}</span>
             <h3>{title}</h3>
             <p>{date}</p>
             <p>Днів до: {daysLeft}</p>
+            <p>Місце проведення: {location}</p>
+
+            <button
+                type='button'
+                className = {isSaved ? 'btn btn-remove' : 'btn btn-saved'}
+                onClick={() => {onToggleSaved(item)}}
+            >
+                {buttonText}
+            </button>
+
         </article>
     )
 }
 
+// Зберігає масив подій у localStorage (використовується для старої логіки)
+function saveToLocalStorage(items) {
+    localStorage.setItem("savedEvents", JSON.stringify(items));
+}
+
+// Зчитує масив подій з localStorage
+function loadFromLocalStorage() {
+    try {
+        const raw = localStorage.getItem("savedEvents");
+        return raw ? JSON.parse(raw) : [];
+    } catch (error) {
+        console.error('Пошкоджені дані в localStorage:', error);
+        return [];
+    }
+}
+
+// Відкриває з'єднання з IndexedDB та створює сховище збережених подій
+function openDB() {
+    return new Promise((resolve, reject) => {
+        try {
+            if (!window.indexedDB) {
+                alert("Ваш браузер не підтримує сховище даних або ви перебуваєте в жорсткому приватному режимі. Функція збереження подій недоступна.");
+                return reject(new Error("IndexedDB не підтримується"))
+            }
+
+            const request = indexedDB.open('EventsDB', 1);
+            request.onupgradeneeded = (event) => {
+                const db = event.target.result;
+                if (!db.objectStoreNames.contains('savedEvents')) {
+                    db.createObjectStore('savedEvents', {keyPath: 'id'})
+                }
+            };
+
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = (event) => {
+                alert("Не вдалося відкрити базу даних збережених подій. Схоже, ваш браузер блокує доступ до локальної пам'яті (можливо, увімкнено приватний режим).")
+                reject(event.target.error)
+            }
+        } catch (error) {
+            alert("Виникла критична помилка під час звернення до пам'яті браузера.")
+            reject(error);
+        }
+    })
+}
+
+// Додає або оновлює подію в базі IndexedDB
+async function addItem(item) {
+    const db =  await openDB();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction('savedEvents', 'readwrite');
+        tx.objectStore('savedEvents').put(item);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+    });
+}
+
+// Видаляє подію з IndexedDB за її id
+async function deleteItem(id) {
+    const db =  await openDB();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction('savedEvents', 'readwrite');
+        tx.objectStore('savedEvents').delete(id);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+    })
+}
+
+// Отримує всі збережені події з IndexedDB
+async function getAllItems() {
+    const db =  await openDB();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction('savedEvents', 'readonly');
+        const request = tx.objectStore('savedEvents').getAll();
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    })
+}
+
+// Головний компонент: керує станом, міграцією, запитами до API та збереженням у БД
 function App() {
     const [events, setEvents] = React.useState([
-        {id: 1, title: '"Deadbeat Tour" Tame Impala New show edition', category: 'Музика', date: '2026-11-24'},
-        {id: 2, title: 'Марія Примаченко "Слава Україні"', category: 'Мистецтво', date: '2026-12-3'},
-        {id: 3, title: 'Новорічна музична вистава "Три горішки для Попелюшки"', category: 'Театр', date: '2027-01-03'},
+        {id: 1, title: '"Deadbeat Tour" Tame Impala New show edition', category: 'Музика', date: '2026-11-24', location: 'НСК "Олімпійський"'},
+        {id: 2, title: 'Марія Примаченко "Слава Україні"', category: 'Мистецтво', date: '2026-12-3', location: 'Будинок Офіцерів'},
+        {id: 3, title: 'Новорічна музична вистава "Три горішки для Попелюшки"', category: 'Театр', date: '2027-01-03', location: 'бульвар Тараса Шевченка'},
     ]);
+
+    const [savedEvents, setSavedEvents] = React.useState([]);
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getAllItems();
+                setSavedEvents(data);
+            }catch(error) {
+                console.error(error);
+            }
+        }
+        fetchData();
+    }, [])
+
+    const handleSavedEvents = async (eventItem) => {
+        const isSaved = savedEvents.some(savedEvent => savedEvent.id === eventItem.id);
+
+        try {
+            if (isSaved) {
+                await deleteItem(eventItem.id);
+                setSavedEvents(savedEvents.filter(item => item.id !== eventItem.id));
+            } else {
+                await addItem(eventItem);
+                setSavedEvents([...savedEvents, eventItem]);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     React.useEffect(() => {
         const loadEvents = async () => {
@@ -51,6 +172,7 @@ function App() {
                     title: item.localName,
                     category: 'Свята',
                     date: item.date,
+                    location: 'Around the World',
                 }))
 
                 setEvents(prevEvents => {
@@ -66,19 +188,50 @@ function App() {
         loadEvents();
     }, []);
 
+    React.useEffect(() => {
+        const migrateEvents = async () => {
+            try {
+                const isMigrated = localStorage.getItem("migrated");
+
+                if (!isMigrated) {
+                    const oldEvents = loadFromLocalStorage();
+
+                    if (oldEvents.length > 0) {
+                        for (let eventItem of oldEvents) {
+                            await addItem(eventItem);
+                        }
+                    }
+                }
+
+                localStorage.setItem("migrated", 'true');
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        migrateEvents();
+    }, [])
+
     return (
         <div>
             <p>Кількість подій: {events.length}</p>
+            <div className='all-cards'>
+                {events.map((item) => {
+                    const isEventSaved = savedEvents.some(saved => saved.id === item.id);
 
-            <div className="all-cards">
-                {events.map((item) => (
-                    <EventCard
-                        key={item.id}
-                        title={item.title}
-                        category={item.category}
-                        date={item.date}
-                    />
-                ))}
+                    return (
+                        <EventCard
+                            key={item.id}
+                            item={item}
+                            onToggleSaved={handleSavedEvents}
+                            isSaved={isEventSaved}
+                            title={item.title}
+                            category={item.category}
+                            date={item.date}
+                            location={item.location}
+                        />
+                    )
+                })}
             </div>
         </div>
     )
