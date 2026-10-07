@@ -135,6 +135,14 @@ select, input {
     gap: 0.5rem;
 }
 
+.btn.btn-saved {
+    margin: 2rem 0 0 0;
+}
+
+.btn.btn-remove {
+    margin: 2rem 0 0 0;
+    background-color: #BEBAFD;
+}
 
 .card {
     padding: 16px;
