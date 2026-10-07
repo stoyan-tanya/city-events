@@ -149,6 +149,19 @@ select, input {
     background: #fff;
     border-radius: 10px;
     box-shadow: #fff 0 5px 15px;
+    animation: slide 0.7s ease-out;
+}
+
+/* Анімація плавної появи картки події знизу вгору при завантаженні сторінки */
+@keyframes slide {
+    0% {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .card h3{
@@ -230,6 +243,37 @@ footer {
     gap: 16px;
     align-items: baseline;
     padding: 10px;
+}
+
+.progress-bar-base {
+    margin: 1rem auto;
+    border-radius: 10px;
+    height: 30px;
+    width: 100%;
+    background: rgb(166 166 166 / 0.36);
+}
+
+/* Плавний перехід (transition) ширини індикатора залишку днів */
+.progress-bar {
+    border-radius: 10px;
+    height: 100%;
+    transition: width 0.4s ease;
+}
+
+.progress-bar.music {
+    background: #a2166a;
+}
+
+.progress-bar.art {
+    background: #86198f;
+}
+
+.progress-bar.theatre {
+    background: #6d28d9;
+}
+
+.progress-bar.holiday {
+    background: #ff8b00;
 }
 
 @media (min-width: 600px) {

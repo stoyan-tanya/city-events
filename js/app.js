@@ -3,11 +3,26 @@
 
 // Рендерить картку події та обчислює кількість днів до її початку
 function EventCard({title, category, date, location, item, onToggleSaved, isSaved}) {
+    const [currentWidth, setCurrentWidth] = React.useState(0);
+
     const todayDate = new Date();
     const eventDate = new Date(date);
 
     const difference = eventDate - todayDate;
     const daysLeft = Math.ceil(difference / (1000*60*60*24));
+
+    let percentage = daysLeft / 93 * 100;
+    if (percentage > 100) percentage = 100;
+    else if (percentage < 0) percentage = 0;
+
+// Невелика затримка перед встановленням стану, щоб CSS transition відпрацював коректно при монтуванні компонента
+    React.useEffect(() => {
+        const timeout = setTimeout(() => {
+            setCurrentWidth(percentage);
+        }, 50)
+
+        return () => {clearTimeout(timeout);};
+    }, [percentage]);
 
     let cssClasses;
     if (category === "Музика") {
@@ -26,8 +41,11 @@ function EventCard({title, category, date, location, item, onToggleSaved, isSave
             <span className="badge">{category}</span>
             <h3>{title}</h3>
             <p>{date}</p>
-            <p>Днів до: {daysLeft}</p>
             <p>Місце проведення: {location}</p>
+            <p>Днів до: {daysLeft}</p>
+            <div className="progress-bar-base"> {}
+                <div className={`progress-bar ${cssClasses}`} style={{width: `${currentWidth}%`} }>{}</div>
+            </div>
 
             <button
                 type='button'
