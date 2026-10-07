@@ -176,7 +176,7 @@ titleInput.addEventListener('invalid', event => {
 })
 
 
-const form = document.querySelector('#forms')
+const form = document.querySelector('.add-event-form')
 // Обробник події відправки форми (submit) для створення нової події, додавання її в масив та перемальовування карток
 form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -190,6 +190,7 @@ form.addEventListener('submit', (event) => {
     }
 
     events.push(newEvent);
+    countEvents.textContent = `Кількість подій - ${events.length}`;
     renderCard(events);
     form.reset();
 })
