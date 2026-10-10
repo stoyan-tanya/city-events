@@ -72,14 +72,26 @@ function EventCard({title, category, date, location, item, onToggleSaved, isSave
                 </div>
             )}
 
-            <button
-                type='button'
-                className = {isSaved ? 'btn btn-remove' : 'btn btn-saved'}
-                onClick={() => {onToggleSaved(item)}}
-            >
-                {buttonText}
-            </button>
+            <div className="card-buttons">
+                <button
+                    type='button'
+                    className = {isSaved ? 'btn btn-remove' : 'btn btn-saved'}
+                    onClick={() => {onToggleSaved(item)}}
+                >
+                    {buttonText}
+                </button>
 
+                <button
+                    type='button'
+                    className="btn btn-details"
+                    onClick={(event) => {
+                        event.preventDefault();
+                        window.location.hash = `#/events/${item.id}`;
+                    }}
+                >
+                    Деталі
+                </button>
+            </div>
         </article>
     )
 }
@@ -162,15 +174,49 @@ async function getAllItems() {
     })
 }
 
+const routes = [
+    {path: '/', view: Home},
+    {path: '/saved', view: SavedEventsPage},
+    {path: '/events/:id', view: EventCardPage}
+];
+
+function matchRoutes(path) {
+    const pathParts = path.split('/').filter(Boolean);
+    for (const route of routes) {
+        const routeParts = route.path.split('/').filter(Boolean);
+        if (routeParts.length !== pathParts.length) continue;
+        const params = {};
+        const isMatch = routeParts.every((part, i) => {
+            if (part.startsWith(':')) {
+                params[part.slice(1)] = pathParts[i];
+                return true;
+            }
+            return part === pathParts[i];
+        });
+        if (isMatch) return {view: route.view, params};
+    }
+    return null;
+}
+
 // Головний компонент: керує станом, міграцією, запитами до API та збереженням у БД
 function App() {
     const [events, setEvents] = React.useState([
-        {id: 1, title: '"Deadbeat Tour" Tame Impala New show edition', category: 'Музика', date: '2026-11-24', location: 'НСК "Олімпійський"'},
-        {id: 2, title: 'Марія Примаченко "Слава Україні"', category: 'Мистецтво', date: '2026-12-3', location: 'Будинок Офіцерів'},
-        {id: 3, title: 'Новорічна музична вистава "Три горішки для Попелюшки"', category: 'Театр', date: '2026-10-22', location: 'бульвар Тараса Шевченка'},
+        {id: 1, title: '"Deadbeat Tour" Tame Impala New show edition', category: 'Музика', date: '2026-11-24', location: 'НСК "Олімпійський"', img: 'assets/img/ConcertAffiche.jpg' },
+        {id: 2, title: 'Марія Примаченко "Слава Україні"', category: 'Мистецтво', date: '2026-12-03', location: 'Будинок Офіцерів', img: 'assets/img/ExhibitionMariya.jpg'},
+        {id: 3, title: 'Новорічна музична вистава "Три горішки для Попелюшки"', category: 'Театр', date: '2026-10-22', location: 'бульвар Тараса Шевченка', img: 'assets/img/NewYearPlay.jpg'},
     ]);
 
     const [savedEvents, setSavedEvents] = React.useState([]);
+
+    const [currentHash, setCurrrentHash] = React.useState(window.location.hash || '#/');
+
+    React.useEffect(() => {
+        const handleHashChange = () => {
+            setCurrrentHash(window.location.hash || '#/');
+        }
+        window.addEventListener('hashchange', handleHashChange);
+        return () => window.removeEventListener('hashchange', handleHashChange);
+    }, [])
 
     React.useEffect(() => {
         const fetchData = async () => {
@@ -255,36 +301,238 @@ function App() {
         migrateEvents();
     }, [])
 
-    return (
-        <div>
-            <p>Кількість подій: {events.length}</p>
-            <div className='all-cards'>
-                {events.map((item) => {
-                    const isEventSaved = savedEvents.some(saved => saved.id === item.id);
+    const path = currentHash.replace('#', '');
+    const routeMatch = matchRoutes(path);
 
-                    return (
-                        <EventCard
-                            key={item.id}
-                            item={item}
-                            onToggleSaved={handleSavedEvents}
-                            isSaved={isEventSaved}
-                            title={item.title}
-                            category={item.category}
-                            date={item.date}
-                            location={item.location}
-                        />
-                    )
-                })}
-            </div>
+    let CurrentView = NotFoundPage;
+    let routeParams = {};
+
+    if (routeMatch) {
+        CurrentView = routeMatch.view;
+        routeParams = routeMatch.params;
+    }
+
+    return (
+        <div className="app">
+            <CurrentView
+                events={events}
+                savedEvents={savedEvents}
+                onToggleSaved={handleSavedEvents}
+                params={routeParams}
+            />
         </div>
     )
 }
 
-ReactDOM.createRoot(document.getElementById('events-list')).render(
+function Home ({events, savedEvents, onToggleSaved}) {
+    return (
+        <div className='layout'>
+            <main>
+                <section id="filters">
+                    <h2>Фільтр за датою/категорією</h2>
+                    <form className="filters">
+                        <div className="filter-date">
+                            <label htmlFor="event-date">Оберіть дату події:</label>
+                            <input type="date" id="event-date"/>
+                        </div>
+
+                        <div className="filter-category">
+                            <label htmlFor="event-category">Оберіть категорію події:</label>
+                            <select id="event-category">
+                                <option value="music">Музика</option>
+                                <option value="art">Мистецтво</option>
+                                <option value="theatre">Театр</option>
+                                <option value="holiday">Свята</option>
+                            </select>
+                        </div>
+                    </form>
+                </section>
+
+                <section id="forms">
+                    <h2>Додати нову подію</h2>
+                    <form className="add-event-form">
+                        <div className="add-event">
+                            <label htmlFor="event-name">Уведіть назву події</label>
+                            <input type="text" id="event-name" name="title" required pattern=".{3,}"/>
+
+                            <label htmlFor="new-event-category">Оберіть категорію події:</label>
+                            <select id="new-event-category" name="category" required>
+                                <option value="Музика">Музика</option>
+                                <option value="Мистецтво">Мистецтво</option>
+                                <option value="Театр">Театр</option>
+                                <option value="holiday">Свята</option>
+                            </select>
+
+                            <label htmlFor="new-event-date">Оберіть дату події</label>
+                            <input type="date" id="new-event-date" name="date" required/>
+                        </div>
+
+                        <div className="form-submit">
+                            <button type="submit" className="btn">Додати подію</button>
+                        </div>
+                    </form>
+                </section>
+
+                <section id="quick-filters">
+                    <h2>Швидкі фільтри</h2>
+                    <div className="buttons-container" id="category-filters">
+                        <button type="button" className="btn" data-category="all">Усі</button>
+                        <button type="button" className="btn" data-category="Музика">Музика</button>
+                        <button type="button" className="btn" data-category="Мистецтво">Мистецтво</button>
+                        <button type="button" className="btn" data-category="Театр">Театр</button>
+                        <button type="button" className="btn" data-category="Свята">Свята</button>
+                    </div>
+                </section>
+
+                <section id="events">
+                    <div>
+                        <p>Кількість подій: {events.length}</p>
+                        <div className='all-cards'>
+                            {events.map((item) => {
+                                const isEventSaved = savedEvents.some(saved => saved.id === item.id);
+
+                                return (
+                                    <EventCard
+                                        key={item.id}
+                                        item={item}
+                                        onToggleSaved={onToggleSaved}
+                                        isSaved={isEventSaved}
+                                        title={item.title}
+                                        category={item.category}
+                                        date={item.date}
+                                        location={item.location}
+                                    />
+                                )
+                            })}
+                        </div>
+                    </div>
+                </section>
+            </main>
+            <aside id="current">
+                <h2>Деталі події</h2>
+                <p>Тут можна буде переглянути деталі обраної події</p>
+            </aside>
+        </div>
+    )
+}
+
+//Сторінка збережених подій
+function SavedEventsPage({savedEvents, onToggleSaved}) {
+    return (
+        <div className="layout">
+            <main>
+                <section className="events">
+                    <h2>Збережені події</h2>
+
+                    {savedEvents.length===0 ? (
+                        <p>У Вас поки немає збережених подій</p>
+                    ) : (
+                        <div className="all-cards">
+                            {savedEvents.map((item) => {
+                                return (
+                                    <EventCard
+                                    key={item.id}
+                                    item={item}
+                                    onToggleSaved={onToggleSaved}
+                                    isSaved={true}
+                                    title={item.title}
+                                    category={item.category}
+                                    date={item.date}
+                                    location={item.location}
+                                    />
+                                )
+                            })}
+                        </div>
+                    )}
+                </section>
+            </main>
+        </div>
+    )
+}
+
+//Сторінка з деталями конкретної сторінки
+function EventCardPage ({events, savedEvents, onToggleSaved, params}) {
+    const selectedEvents = events.find(item => item.id == params.id);
+
+    return (
+        <div className="layout">
+            <main>
+                <section className="events">
+                    <h2>Оберіть подію для перегляду деталей</h2>
+                    <div className="all-cards">
+                        {events.map((item) => {
+                            const isEventSaved = savedEvents.find(saved => saved.id === item.id);
+
+                            return (
+                                <EventCard
+                                    key={item.id}
+                                    item={item}
+                                    onToggleSaved={onToggleSaved}
+                                    isSaved={isEventSaved}
+                                    title={item.title}
+                                    category={item.category}
+                                    date={item.date}
+                                    location={item.location}
+                                />
+                            )
+                        })}
+                    </div>
+                </section>
+            </main>
+            <aside id="current">
+                <h2>Деталі події</h2>
+                {selectedEvents ? (
+                    <div className="event-details">
+                        {selectedEvents.img && (
+                            <img
+                                src={selectedEvents.img}
+                                alt={selectedEvents.title}
+                            />
+                        )}
+
+                        <p>Дата: {selectedEvents.date}</p>
+                        <p>Локація: {selectedEvents.location}</p>
+
+                        <p>
+                            Це детальна сторінка події. Тут Ви можете ознайомитися з афішею, дізнатися точне місце проведення та деталі заходу.</p>
+                        <p>Натисніть "Зберегти", щоб не втратити її!</p>
+
+                    </div>
+                ) : (
+                    <p style={{ color: 'red' }}>Оберіть подію зі списку або перевірте посилання.</p>
+                )}
+            </aside>
+        </div>
+    );
+}
+
+//Сторінка при омилковому вводі адреси
+function NotFoundPage () {
+    return (
+        <div className="layout">
+            <main>
+                <h1>СТОРІНКУ НЕ ЗНАЙДЕНО</h1>
+                <h2>Натисніть на посилання нижче аби перейти до головної сторінки</h2>
+                <a href="#/" data-link>Повернутися</a>
+            </main>
+        </div>
+    )
+}
+
+ReactDOM.createRoot(document.getElementById('app')).render(
     <React.StrictMode>
-        <App />
+        <App/>
     </React.StrictMode>
 );
+
+//Обробка переходу
+document.addEventListener('click', (event) => {
+    const link = event.target.closest('a[data-link]');
+    if (!link) return;
+    event.preventDefault();
+    window.location.hash = link.getAttribute('href');
+});
+
 
 
 //Робота попередніх 9 лабораторних, які були замінені кодом вище
