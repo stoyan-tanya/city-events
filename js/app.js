@@ -10,10 +10,43 @@ function EventCard({title, category, date, location, item, onToggleSaved, isSave
 
     const difference = eventDate - todayDate;
     const daysLeft = Math.ceil(difference / (1000*60*60*24));
+    let textDaysLeft = "";
+    if (daysLeft === 0) {
+        textDaysLeft = "Подія відбувається уже сьогодні";
+    } else if (daysLeft < 0) {
+        textDaysLeft = "Подія вже пройшла. Очікуйте наступних анонсів!";
+    } else {
+        textDaysLeft = "Днів до: " + daysLeft;
+    }
 
-    let percentage = daysLeft / 93 * 100;
-    if (percentage > 100) percentage = 100;
-    else if (percentage < 0) percentage = 0;
+    let cssClasses;
+    let cssClassProgressBar
+    if (category === "Музика") {
+        cssClasses = "music";
+        cssClassProgressBar = "music";
+    }else if (category === "Мистецтво") {
+        cssClasses = "art";
+        cssClassProgressBar = "art";
+    } else if (category === "Театр") {
+        cssClasses = "theatre";
+        cssClassProgressBar = "theatre";
+    } else {
+        cssClasses = "holiday";
+        cssClassProgressBar = "holiday";
+    }
+
+
+    let percentage = 0;
+    if (daysLeft === 0) {
+        cssClassProgressBar = "happensToday";
+        percentage = 100;
+    } else if (daysLeft > 0) {
+        percentage = (daysLeft / 93) * 100;
+        if (percentage > 100) percentage = 100;
+    }
+
+    const isUpcoming = daysLeft >= 0 && daysLeft <= 14;
+
 
 // Невелика затримка перед встановленням стану, щоб CSS transition відпрацював коректно при монтуванні компонента
     React.useEffect(() => {
@@ -24,28 +57,20 @@ function EventCard({title, category, date, location, item, onToggleSaved, isSave
         return () => {clearTimeout(timeout);};
     }, [percentage]);
 
-    let cssClasses;
-    if (category === "Музика") {
-        cssClasses = "music";
-    }else if (category === "Мистецтво") {
-        cssClasses = "art";
-    } else if (category === "Театр") {
-        cssClasses = "theatre";
-    } else {
-        cssClasses = "holiday";
-    }
-
     const buttonText = isSaved ? 'Збережено' : 'Додати в обране';
     return (
-        <article className={`card ${cssClasses}`}>
+        <article className={`card ${cssClasses} ${isUpcoming ? 'upcoming' : ''}`}>
             <span className="badge">{category}</span>
-            <h3>{title}</h3>
+            <h3 className="boldText">{title}</h3>
             <p>{date}</p>
             <p>Місце проведення: {location}</p>
-            <p>Днів до: {daysLeft}</p>
-            <div className="progress-bar-base"> {}
-                <div className={`progress-bar ${cssClasses}`} style={{width: `${currentWidth}%`} }>{}</div>
-            </div>
+            <p className="boldText">{textDaysLeft}</p>
+
+            {daysLeft >= 0 && (
+                <div className="progress-bar-base"> {}
+                    <div className={`progress-bar ${cssClassProgressBar}`} style={{width: `${currentWidth}%`} }>{}</div>
+                </div>
+            )}
 
             <button
                 type='button'
@@ -142,7 +167,7 @@ function App() {
     const [events, setEvents] = React.useState([
         {id: 1, title: '"Deadbeat Tour" Tame Impala New show edition', category: 'Музика', date: '2026-11-24', location: 'НСК "Олімпійський"'},
         {id: 2, title: 'Марія Примаченко "Слава Україні"', category: 'Мистецтво', date: '2026-12-3', location: 'Будинок Офіцерів'},
-        {id: 3, title: 'Новорічна музична вистава "Три горішки для Попелюшки"', category: 'Театр', date: '2027-01-03', location: 'бульвар Тараса Шевченка'},
+        {id: 3, title: 'Новорічна музична вистава "Три горішки для Попелюшки"', category: 'Театр', date: '2026-10-22', location: 'бульвар Тараса Шевченка'},
     ]);
 
     const [savedEvents, setSavedEvents] = React.useState([]);
