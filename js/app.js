@@ -249,7 +249,7 @@ function App() {
     React.useEffect(() => {
         const loadEvents = async () => {
             try {
-                const response = await fetch("https://date.nager.at/api/v3/PublicHolidays/2026/UA");
+                const response = await fetch("/api/events");
 
                 if (!response.ok) {
                     throw new Error("Failed to load events");
