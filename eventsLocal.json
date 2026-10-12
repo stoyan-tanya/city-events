@@ -1,0 +1,103 @@
+[
+  {
+    "id": 1,
+    "title": "\"Deadbeat Tour\" Tame Impala New show edition",
+    "category": "Музика",
+    "date": "2026-11-24",
+    "location": "НСК \"Олімпійський\"",
+    "img": "assets/img/ConcertAffiche.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Марія Примаченко \"Слава Україні\"",
+    "category": "Мистецтво",
+    "date": "2026-12-03",
+    "location": "Будинок Офіцерів",
+    "img": "assets/img/ExhibitionMariya.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Новорічна музична вистава \"Три горішки для Попелюшки\"",
+    "category": "Театр",
+    "date": "2026-10-22",
+    "location": "бульвар Тараса Шевченка",
+    "img": "assets/img/NewYearPlay.jpg"
+  },
+  {
+    "id": 4,
+    "title": "Новий Рік",
+    "category": "Свята",
+    "date": "2026-01-01",
+    "location": "Around the World"
+  },
+  {
+    "id": 5,
+    "title": "Міжнародний жіночий день",
+    "category": "Свята",
+    "date": "2026-03-08",
+    "location": "Around the World"
+  },
+  {
+    "id": 6,
+    "title": "Великдень",
+    "category": "Свята",
+    "date": "2026-04-12",
+    "location": "Around the World"
+  },
+  {
+    "id": 7,
+    "title": "День праці",
+    "category": "Свята",
+    "date": "2026-05-01",
+    "location": "Around the World"
+  },
+  {
+    "id": 8,
+    "title": "День перемоги над нацизмом у Другій світовій війні",
+    "category": "Свята",
+    "date": "2026-05-08",
+    "location": "Around the World"
+  },
+  {
+    "id": 9,
+    "title": "Трійця",
+    "category": "Свята",
+    "date": "2026-05-31",
+    "location": "Around the World"
+  },
+  {
+    "id": 10,
+    "title": "День Конституції",
+    "category": "Свята",
+    "date": "2026-06-28",
+    "location": "Around the World"
+  },
+  {
+    "id": 11,
+    "title": "День Української Державності",
+    "category": "Свята",
+    "date": "2026-07-15",
+    "location": "Around the World"
+  },
+  {
+    "id": 12,
+    "title": "День Незалежності",
+    "category": "Свята",
+    "date": "2026-08-24",
+    "location": "Around the World"
+  },
+  {
+    "id": 13,
+    "title": "День захисників і захисниць України",
+    "category": "Свята",
+    "date": "2026-10-01",
+    "location": "Around the World"
+  },
+  {
+    "id": 14,
+    "title": "Різдво Христове",
+    "category": "Свята",
+    "date": "2026-12-25",
+    "location": "Around the World"
+  }
+]

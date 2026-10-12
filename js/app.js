@@ -245,7 +245,12 @@ function App() {
     React.useEffect(() => {
         const loadEvents = async () => {
             try {
-                const response = await fetch("/api/events");
+                // Якщо сайт відкритий на GitHub Pages — беремо дані зі статичного файлу, а якщо локально — з твого сервера
+                const API_URL = window.location.hostname.includes("github.io")
+                    ? "./eventsLocal.json"
+                    : "http://localhost:3000/api/events";
+
+                const response = await fetch(API_URL);
 
                 if (!response.ok) {
                     throw new Error("Failed to load events");
