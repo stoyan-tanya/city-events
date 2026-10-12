@@ -200,11 +200,7 @@ function matchRoutes(path) {
 
 // Головний компонент: керує станом, міграцією, запитами до API та збереженням у БД
 function App() {
-    const [events, setEvents] = React.useState([
-        {id: 1, title: '"Deadbeat Tour" Tame Impala New show edition', category: 'Музика', date: '2026-11-24', location: 'НСК "Олімпійський"', img: 'assets/img/ConcertAffiche.jpg' },
-        {id: 2, title: 'Марія Примаченко "Слава Україні"', category: 'Мистецтво', date: '2026-12-03', location: 'Будинок Офіцерів', img: 'assets/img/ExhibitionMariya.jpg'},
-        {id: 3, title: 'Новорічна музична вистава "Три горішки для Попелюшки"', category: 'Театр', date: '2026-10-22', location: 'бульвар Тараса Шевченка', img: 'assets/img/NewYearPlay.jpg'},
-    ]);
+    const [events, setEvents] = React.useState([]);
 
     const [savedEvents, setSavedEvents] = React.useState([]);
 
@@ -249,25 +245,15 @@ function App() {
     React.useEffect(() => {
         const loadEvents = async () => {
             try {
-                const response = await fetch("/api/events");
+                const response = await fetch("http://localhost:3000/api/events");
 
                 if (!response.ok) {
                     throw new Error("Failed to load events");
                 }
 
                 const data = await response.json();
-                const newEvents = data.map((item, index) => ({
-                    id: 4 + index,
-                    title: item.localName,
-                    category: 'Свята',
-                    date: item.date,
-                    location: 'Around the World',
-                }))
 
-                setEvents(prevEvents => {
-                    const oldEvents = prevEvents.filter((item) => item.category !== 'Свята');
-                    return [...oldEvents, ...newEvents];
-                });
+                setEvents(data);
 
             } catch (error) {
                 console.error(error);
