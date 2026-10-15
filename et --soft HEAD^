@@ -1,0 +1,46 @@
+[33m1824843[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mlab-15[m[33m, [m[1;31morigin/lab-15[m[33m)[m Lab 15 fixed problem
+[33mc8c5fb7[m Lab 15 code with mistakes
+[33me8951e5[m Lab 15 complete lab 15 security audit and update README
+[33m2e873fa[m Lab 15 complete lab 15 security audit and update README
+[33mc4312e8[m Merge branch 'lab-14'
+[33m9fa1ea4[m[33m ([m[1;31morigin/lab-14[m[33m, [m[1;32mlab-14[m[33m)[m Lab 14 update events.json data and simplify React fetch logic
+[33m4cf7b29[m Merge branch 'lab-14'
+[33m9be7c87[m Lab 14 add local Node.js Express backend and migrate API endpoints
+[33m2f7cf57[m Lab 14 add local Node.js Express backend and migrate API endpoints
+[33me7add63[m[33m ([m[1;31morigin/lab-13[m[33m, [m[1;32mlab-13[m[33m)[m Lab 13 implement custom client-side hash router for SPA
+[33mfa83e4a[m Merge pull request #7 from stoyan-tanya/lab-12
+[33m8384a16[m[33m ([m[1;31morigin/lab-12[m[33m)[m Lab 12 handle past events UI and fix upcoming animation
+[33m243420e[m Merge branch 'lab-12'
+[33m640943d[m Merge branch 'main' of https://github.com/stoyan-tanya/affiche
+[33m3c6134f[m[33m ([m[1;32mlab-12[m[33m)[m Lab 12
+[33m2b91344[m Merge branch 'lab-11'
+[33m33ad5e9[m[33m ([m[1;32mlab-11[m[33m)[m Lab 11
+[33m18e35f5[m Merge pull request #5 from stoyan-tanya/lab-8
+[33m252c365[m Lab 8 fixed version
+[33mfd3b661[m Merge branch 'lab-10'
+[33med31aa2[m[33m ([m[1;31morigin/lab-10[m[33m, [m[1;32mlab-10[m[33m)[m Lab 10
+[33md460c1d[m Lab 10
+[33mdf6d88e[m Lab 10
+[33mc969edf[m[33m ([m[1;31morigin/lab-9[m[33m, [m[1;32mlab-9[m[33m)[m Lab 9
+[33m3632f39[m Lab 9
+[33m537c5ee[m Lab 8
+[33ma1152ea[m Lab 8
+[33m7f6bb7c[m[33m ([m[1;31morigin/lab-7[m[33m, [m[1;32mlab-7[m[33m)[m Lab 7
+[33m1ffcb54[m[33m ([m[1;31morigin/lab-6[m[33m, [m[1;32mlab-6[m[33m)[m Lab 6
+[33m85eaa79[m[33m ([m[1;31morigin/lab-5[m[33m, [m[1;32mlab-5[m[33m)[m Lab 5 renewed
+[33medae712[m Lab 5
+[33m8dc2e45[m Lab 5
+[33m58bb77d[m Lab 5
+[33mfab54f5[m Lab 5
+[33mfdc6901[m[33m ([m[1;31morigin/lab-4[m[33m, [m[1;32mlab-4[m[33m)[m Lab 4
+[33m512b112[m Lab 4
+[33m5cee5a6[m Merge branch 'lab-3'
+[33mdba36b3[m[33m ([m[1;31morigin/lab-3[m[33m, [m[1;32mlab-3[m[33m)[m Lab 3
+[33mf48510c[m Lab 2
+[33ma398cbc[m[33m ([m[1;31morigin/lab-2[m[33m, [m[1;32mlab-2[m[33m)[m Lab 2
+[33m2397405[m Lab 2
+[33m17ce2fd[m Lab 2
+[33m745a154[m[33m ([m[1;31morigin/lab-1[m[33m, [m[1;32mlab-1[m[33m)[m Lab 1
+[33mf810207[m Lab 1
+[33m6a7f954[m Lab 1
+[33m225963c[m Initial commit

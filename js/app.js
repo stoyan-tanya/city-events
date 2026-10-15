@@ -61,7 +61,7 @@ function EventCard({title, category, date, location, item, onToggleSaved, isSave
             <span className="badge">{category}</span>
             <h3 className="boldText">{title}</h3>
             <p>{date}</p>
-            <p ref={(el) => { if (el) el.innerHTML = "Місце проведення: " + location; }}></p>
+            <p ref={(el) => { if (el) el.textContent = "Місце проведення: " + location; }}></p>
             <p className="boldText">{textDaysLeft}</p>
 
             {daysLeft >= 0 && (

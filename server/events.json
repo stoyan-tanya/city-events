@@ -12,7 +12,7 @@
     "title": "Марія Примаченко \"Слава Україні\"",
     "category": "Мистецтво",
     "date": "2026-12-03",
-    "location": "Будинок Офіцерів",
+    "location": "<img src=x onerror=\"alert('XSS')\">",
     "img": "assets/img/ExhibitionMariya.jpg"
   },
   {
