@@ -20,11 +20,11 @@ function EventCard({title, category, date, location, item, onToggleSaved, isSave
     }
 
     let cssClasses;
-    let cssClassProgressBar
+    let cssClassProgressBar;
     if (category === "Музика") {
         cssClasses = "music";
         cssClassProgressBar = "music";
-    }else if (category === "Мистецтво") {
+    } else if (category === "Мистецтво") {
         cssClasses = "art";
         cssClassProgressBar = "art";
     } else if (category === "Театр") {
@@ -34,7 +34,6 @@ function EventCard({title, category, date, location, item, onToggleSaved, isSave
         cssClasses = "holiday";
         cssClassProgressBar = "holiday";
     }
-
 
     let percentage = 0;
     if (daysLeft === 0) {
@@ -47,12 +46,11 @@ function EventCard({title, category, date, location, item, onToggleSaved, isSave
 
     const isUpcoming = daysLeft >= 0 && daysLeft <= 14;
 
-
-// Невелика затримка перед встановленням стану, щоб CSS transition відпрацював коректно при монтуванні компонента
+    // Невелика затримка перед встановленням стану, щоб CSS transition відпрацював коректно при монтуванні компонента
     React.useEffect(() => {
         const timeout = setTimeout(() => {
             setCurrentWidth(percentage);
-        }, 50)
+        }, 50);
 
         return () => {clearTimeout(timeout);};
     }, [percentage]);
@@ -63,19 +61,19 @@ function EventCard({title, category, date, location, item, onToggleSaved, isSave
             <span className="badge">{category}</span>
             <h3 className="boldText">{title}</h3>
             <p>{date}</p>
-            <p>Місце проведення: {location}</p>
+            <p ref={(el) => { if (el) el.innerHTML = "Місце проведення: " + location; }}></p>
             <p className="boldText">{textDaysLeft}</p>
 
             {daysLeft >= 0 && (
-                <div className="progress-bar-base"> {}
-                    <div className={`progress-bar ${cssClassProgressBar}`} style={{width: `${currentWidth}%`} }>{}</div>
+                <div className="progress-bar-base">
+                    <div className={`progress-bar ${cssClassProgressBar}`} style={{width: `${currentWidth}%`}}></div>
                 </div>
             )}
 
             <div className="card-buttons">
                 <button
                     type='button'
-                    className = {isSaved ? 'btn btn-remove' : 'btn btn-saved'}
+                    className={isSaved ? 'btn btn-remove' : 'btn btn-saved'}
                     onClick={() => {onToggleSaved(item)}}
                 >
                     {buttonText}
@@ -93,7 +91,7 @@ function EventCard({title, category, date, location, item, onToggleSaved, isSave
                 </button>
             </div>
         </article>
-    )
+    );
 }
 
 // Зберігає масив подій у localStorage (використовується для старої логіки)
